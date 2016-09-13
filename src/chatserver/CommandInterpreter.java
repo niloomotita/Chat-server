@@ -1,12 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Chat Server
  */
 
 /**
  *
- * @author Long-PC
+ * @author Long, Niloo 
  */
 package chatserver;
 import java.util.Scanner;
@@ -19,6 +17,7 @@ public class CommandInterpreter {
    public CommandInterpreter() {
        command = null;
        username = null;
+       greeted = false;
    }
    
    Scanner inp = new Scanner(System.in);
@@ -32,6 +31,7 @@ public class CommandInterpreter {
    public void getUsername() {
        System.out.print("Input username: ");
        username = inp.next();
+       System.out.println("Username is " +username);
        //return this.username;
    }
    
@@ -40,23 +40,34 @@ public class CommandInterpreter {
        System.exit(0);
    }
    
+   public void printResult(){
+       if(!command.contains(":")){
+       System.out.println(username + ":" + command);
+       }
+   }
+   
    public void chat() {
-        getUsername();
-        System.out.println("Username is " +username);
+       getUsername();
+        
         while (!username.isEmpty()) {
             getCommand();
             switch (command) {
                 case ":quit": quit();
                     
-                case ":user": run();
+                case ":user": getUsername();
    
-                default: System.out.println(username + ":" + command);
+                default: printResult();
             }
         }    
     }
    
+   
+   
    public void run() {
-       System.out.println("Welcome to our chatserver");
+       if(!greeted) {
+        System.out.println("Welcome to our chatserver");
+        greeted = true;
+       }
        while (true) {
         getCommand();   
         switch (command) {
